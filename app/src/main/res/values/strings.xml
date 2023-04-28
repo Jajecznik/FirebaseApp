@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FirebaseApp</string>
+
+    <string name="books">Books</string>
+    <string name="games">Games</string>
+    <string name="movies">Movies</string>
+</resources>
