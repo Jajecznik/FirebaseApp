@@ -4,4 +4,14 @@
     <string name="books">Books</string>
     <string name="games">Games</string>
     <string name="movies">Movies</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+
+    <string name="not_registered">Not registered yet!</string>
+    <string name="already_registered">Already registered!</string>
+
+    <string name="your_email">Type your email</string>
+    <string name="your_password">Type your password</string>
+    <string name="confirm_password">Confirm your password</string>
 </resources>
