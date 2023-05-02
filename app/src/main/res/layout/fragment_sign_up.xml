@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/emailCV"
         android:text="@string/sign_up"
+        android:textColorHint="@color/background"
         android:textColor="@color/white"
         android:textSize="38sp"
         android:textStyle="bold">
@@ -48,6 +49,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:hint="@string/your_email"
+                android:textColorHint="@color/background"
                 android:inputType="textEmailAddress"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="15dp"
@@ -75,6 +77,7 @@
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/background"
             app:hintEnabled="false" >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -83,6 +86,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:hint="@string/your_password"
+                android:textColorHint="@color/background"
                 android:inputType="textPassword"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="15dp"
@@ -110,6 +114,7 @@
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/background"
             app:hintEnabled="false" >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -118,6 +123,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:hint="@string/confirm_password"
+                android:textColorHint="@color/background"
                 android:inputType="textPassword"
                 android:paddingHorizontal="15dp"
                 android:paddingVertical="15dp"

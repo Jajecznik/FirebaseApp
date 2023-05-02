@@ -2,6 +2,7 @@ package com.example.firebaseapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
@@ -21,6 +22,13 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         setupWithNavController(bottomNavigationView, navController)
-    }
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.bookFragment || destination.id == R.id.gameFragment || destination.id == R.id.movieFragment) {
+                bottomNavigationView.visibility = View.VISIBLE
+            } else {
+                bottomNavigationView.visibility = View.GONE
+            }
+        }
+    }
 }
