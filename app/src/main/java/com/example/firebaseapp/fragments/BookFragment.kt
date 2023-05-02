@@ -33,7 +33,6 @@ class BookFragment : Fragment(), AddBookFragment.AddBookClickListener,
     ): View {
         binding = FragmentBookBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -17,6 +17,8 @@
 
     <string name="title">Title</string>
     <string name="author">Author</string>
+    <string name="developer">Developer</string>
+    <string name="director">Director</string>
     <string name="genre">Genre</string>
 
 </resources>
