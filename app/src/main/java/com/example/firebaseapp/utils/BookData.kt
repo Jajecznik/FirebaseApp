@@ -1,5 +1,5 @@
 package com.example.firebaseapp.utils
 
-data class BookData (var bookId: String = "", val title: String = "", val author: String = "", val genre: String = "") {
+data class BookData (var bookId: String = "", var title: String = "", var author: String = "", var genre: String = "") {
     constructor() : this("", "", "", "")
 }

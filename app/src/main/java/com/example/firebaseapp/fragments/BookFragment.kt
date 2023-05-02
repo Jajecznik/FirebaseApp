@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.firebaseapp.R
 import com.example.firebaseapp.databinding.FragmentBookBinding
 import com.example.firebaseapp.utils.BookAdapter
 import com.example.firebaseapp.utils.BookData
@@ -24,16 +23,17 @@ class BookFragment : Fragment(), AddBookFragment.AddBookClickListener,
     private lateinit var databaseRef: DatabaseReference
     private lateinit var navController: NavController
     private lateinit var binding: FragmentBookBinding
-    private lateinit var popUpBook: AddBookFragment
     private lateinit var adapter: BookAdapter
     private lateinit var mList: MutableList<BookData>
+    private var popUpBook: AddBookFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentBookBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -60,10 +60,13 @@ class BookFragment : Fragment(), AddBookFragment.AddBookClickListener,
 
     private fun registerEvents() {
         binding.addBookBtn.setOnClickListener {
+            if (popUpBook != null) {
+                childFragmentManager.beginTransaction().remove(popUpBook!!).commit()
+            }
             popUpBook = AddBookFragment()
-            popUpBook.setListener(this)
-            popUpBook.show(
-                childFragmentManager, "AddBookFragment"
+            popUpBook!!.setListener(this)
+            popUpBook!!.show(
+                childFragmentManager, AddBookFragment.TAG
             )
         }
     }
@@ -85,11 +88,10 @@ class BookFragment : Fragment(), AddBookFragment.AddBookClickListener,
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 
-    override fun onSaveTask(
+    override fun onSaveBook(
         title: String,
         author: String,
         genre: String,
@@ -106,14 +108,40 @@ class BookFragment : Fragment(), AddBookFragment.AddBookClickListener,
 
         categoryRef.setValue(categoryNode).addOnCompleteListener {
             if (it.isSuccessful) {
-                titleET.text = null
-                authorET.text = null
-                genreET.text = null
+                Toast.makeText(context, "Book saved", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
             }
         }
-        popUpBook.dismiss()
+        titleET.text = null
+        authorET.text = null
+        genreET.text = null
+        popUpBook!!.dismiss()
+    }
+
+    override fun onUpdateBook(
+        bookData: BookData,
+        titleET: TextInputEditText,
+        authorET: TextInputEditText,
+        genreET: TextInputEditText
+    ) {
+        val bookRef = databaseRef.child(bookData.bookId)
+        val updates = HashMap<String, Any>()
+        updates["title"] = bookData.title
+        updates["author"] = bookData.author
+        updates["genre"] = bookData.genre
+
+        bookRef.updateChildren(updates).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(context, "Book updated", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+            titleET.text = null
+            authorET.text = null
+            genreET.text = null
+            popUpBook!!.dismiss()
+        }
     }
 
     override fun onDeleteBookBtnClick(bookData: BookData) {
@@ -127,6 +155,11 @@ class BookFragment : Fragment(), AddBookFragment.AddBookClickListener,
     }
 
     override fun onEditBookBtnClick(bookData: BookData) {
-        TODO("Not yet implemented")
+        if (popUpBook != null) {
+            childFragmentManager.beginTransaction().remove(popUpBook!!).commit()
+        }
+        popUpBook = AddBookFragment.newInstance(bookData.bookId, bookData.title, bookData.author, bookData.genre)
+        popUpBook!!.setListener(this)
+        popUpBook!!.show(childFragmentManager, AddBookFragment.TAG)
     }
 }
